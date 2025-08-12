@@ -1,0 +1,502 @@
+[
+  {
+    "env": "assembly-v3",
+    "description": [
+      "Pick up the nut and place it onto the peg.",
+      "Grasp a nut, align it, and drop it on its post.",
+      "Lift the loose nut, hover above the peg, then lower to assemble.",
+      "Find the nut, orient it, and finish the assembly on the stand.",
+      "Complete the nut-on-peg assembly from random starting poses."
+    ]
+  },
+  {
+    "env": "basketball-v3",
+    "description": [
+      "Grab the ball and dunk it through the hoop.",
+      "Shoot the basketball so it drops cleanly into the basket.",
+      "Pick up the orange ball and score a slam-dunk.",
+      "Raise the ball over the rim and release inside the net.",
+      "Perform a dunk from random ball-and-rim positions."
+    ]
+  },
+  {
+    "env": "bin-picking-v3",
+    "description": [
+      "Move the puck from one bin to the other.",
+      "Pick the disc out of its tray and drop it in the target bin.",
+      "Grasp the object in Bin A and place it neatly in Bin B.",
+      "Relocate the single puck between the two containers.",
+      "Transfer a shuffled puck to the neighbouring bin."
+    ]
+  },
+  {
+    "env": "box-close-v3",
+    "description": [
+      "Grab the lid and shut the box completely.",
+      "Close the box by pushing its cover down.",
+      "Pick the flap, rotate it, and seal the container.",
+      "Swing the cover over the opening until fully closed.",
+      "Finish the task by closing a randomly positioned lid."
+    ]
+  },
+  {
+    "env": "button-press-topdown-v3",
+    "description": [
+      "Press the button from directly above.",
+      "Reach over the panel and push the top-down button.",
+      "Activate the button with a downward poke.",
+      "Tap the button vertically until it clicks.",
+      "Complete a top-down press at random button spots."
+    ]
+  },
+  {
+    "env": "button-press-topdown-wall-v3",
+    "description": [
+      "Reach over the wall and push the button from above.",
+      "Bypass the barrier and press the button downward.",
+      "Hook around the wall, then tap the top-mounted switch.",
+      "Clear the obstacle and push the button vertically.",
+      "Complete a wall-overhead button press with random layouts."
+    ]
+  },
+  {
+    "env": "button-press-v3",
+    "description": [
+      "Press the button straight on.",
+      "Push the front-facing button until it activates.",
+      "Move the end-effector forward and click the switch.",
+      "Perform a direct button press from random starts.",
+      "Push the button in without rotational contact."
+    ]
+  },
+  {
+    "env": "button-press-wall-v3",
+    "description": [
+      "Reach around the wall to press the button.",
+      "Skirt the barrier and push the forward button.",
+      "Approach sideways, then click the button behind the wall.",
+      "Navigate past the wall and trigger the switch.",
+      "Execute a wall-bypass button press with random offsets."
+    ]
+  },
+  {
+    "env": "coffee-button-v3",
+    "description": [
+      "Press the coffee-machine power button.",
+      "Find the machine and push its front button.",
+      "Activate the brewer by clicking the control switch.",
+      "Reach the coffee unit and press the start button.",
+      "Turn the coffee machine on from varied positions."
+    ]
+  },
+  {
+    "env": "coffee-pull-v3",
+    "description": [
+      "Pull the mug out of the coffee machine.",
+      "Grip the cup and slide it away from the dispenser.",
+      "Extract the mug from the machine opening.",
+      "Remove the coffee cup by pulling it outward.",
+      "Take the mug out at random mug and machine poses."
+    ]
+  },
+  {
+    "env": "coffee-push-v3",
+    "description": [
+      "Push the mug under the coffee spout.",
+      "Slide the cup into position beneath the dispenser.",
+      "Move the mug forward until it sits under the nozzle.",
+      "Insert the cup under the machine and align it.",
+      "Place the mug beneath the spout from random starts."
+    ]
+  },
+  {
+    "env": "dial-turn-v3",
+    "description": [
+      "Rotate the dial a half-turn clockwise.",
+      "Turn the knob 180 degrees.",
+      "Grip the dial and spin it until the arrow flips.",
+      "Twist the dial halfway around its circle.",
+      "Complete a 180° dial turn from random initial angles."
+    ]
+  },
+  {
+    "env": "disassemble-v3",
+    "description": [
+      "Remove the nut from its peg.",
+      "Pull the nut off the post without dropping it.",
+      "Grip the attached nut and lift it away.",
+      "Detach the nut from the peg entirely.",
+      "Disassemble the peg-nut set from varied layouts."
+    ]
+  },
+  {
+    "env": "door-close-v3",
+    "description": [
+      "Push the door until it closes.",
+      "Swing the hinged door shut.",
+      "Grip the handle and fully close the door.",
+      "Move the door panel to the closed position.",
+      "Complete door-closing from random door angles."
+    ]
+  },
+  {
+    "env": "door-lock-v3",
+    "description": [
+      "Rotate the lock clockwise to lock the door.",
+      "Turn the latch until the door is secured.",
+      "Twist the knob right to engage the lock.",
+      "Lock the door by spinning the cylinder clockwise.",
+      "Finish with a locked door starting from random positions."
+    ]
+  },
+  {
+    "env": "door-open-v3",
+    "description": [
+      "Pull the door open.",
+      "Swing the door past 90 degrees.",
+      "Grab the handle and open the door fully.",
+      "Rotate the hinged door outward.",
+      "Open the door from varied initial angles."
+    ]
+  },
+  {
+    "env": "door-unlock-v3",
+    "description": [
+      "Rotate the lock counter-clockwise to unlock.",
+      "Turn the latch left until it disengages.",
+      "Twist the cylinder anticlockwise to open the lock.",
+      "Unlock the door by reversing the lock rotation.",
+      "Complete an unlock with random starting states."
+    ]
+  },
+  {
+    "env": "hand-insert-v3",
+    "description": [
+      "Insert the gripper into the vertical slot.",
+      "Align and push the fingers through the hole.",
+      "Guide the end-effector inside the narrow opening.",
+      "Slide the tool into the target cavity completely.",
+      "Finish insertion from varied approach angles."
+    ]
+  },
+  {
+    "env": "drawer-close-v3",
+    "description": [
+      "Push the drawer shut.",
+      "Slide the drawer inward until fully closed.",
+      "Close the drawer by pressing the front face.",
+      "Move the drawer to its home position.",
+      "Complete drawer-closing from random positions."
+    ]
+  },
+  {
+    "env": "drawer-open-v3",
+    "description": [
+      "Pull the drawer open.",
+      "Grip the handle and slide the drawer outward.",
+      "Open the drawer past the marked distance.",
+      "Extend the drawer until fully out.",
+      "Open a randomly placed drawer completely."
+    ]
+  },
+  {
+    "env": "faucet-open-v3",
+    "description": [
+      "Turn the faucet counter-clockwise to open.",
+      "Rotate the handle left until water flows.",
+      "Twist the tap anticlockwise to fully open.",
+      "Open the faucet by spinning left.",
+      "Start water flow from random faucet poses."
+    ]
+  },
+  {
+    "env": "faucet-close-v3",
+    "description": [
+      "Turn the faucet clockwise to close.",
+      "Rotate the handle right to shut the water.",
+      "Twist the tap clockwise until closed.",
+      "Close the faucet by spinning right.",
+      "Stop water flow from varied positions."
+    ]
+  },
+  {
+    "env": "hammer-v3",
+    "description": [
+      "Hammer the nail into the wall.",
+      "Pick up the hammer and strike the peg flush.",
+      "Swing the hammer to drive the nail fully.",
+      "Hit the screw until it seats.",
+      "Finish hammering tasks from random hammer and peg setups."
+    ]
+  },
+  {
+    "env": "handle-press-side-v3",
+    "description": [
+      "Press the side handle down.",
+      "Push the lateral handle until it clicks.",
+      "Move the side-mounted lever downward.",
+      "Depress the handle from the side completely.",
+      "Perform a sideways press at random handle poses."
+    ]
+  },
+  {
+    "env": "handle-press-v3",
+    "description": [
+      "Press the top handle down.",
+      "Push the vertical handle until it activates.",
+      "Depress the handle straight downward.",
+      "Press the handle to its lower limit.",
+      "Complete handle pressing from random positions."
+    ]
+  },
+  {
+    "env": "handle-pull-side-v3",
+    "description": [
+      "Pull the side handle up.",
+      "Lift the lateral handle to the top stop.",
+      "Grab the side lever and raise it.",
+      "Pull the handle upwards from the side.",
+      "Do a sideways pull on random handle setups."
+    ]
+  },
+  {
+    "env": "handle-pull-v3",
+    "description": [
+      "Pull the handle up.",
+      "Lift the handle straight upward.",
+      "Raise the vertical handle until it locks.",
+      "Grip and pull the handle to its upper limit.",
+      "Finish handle pulling from varied starts."
+    ]
+  },
+  {
+    "env": "lever-pull-v3",
+    "description": [
+      "Pull the lever down 90 degrees.",
+      "Rotate the lever downward until horizontal.",
+      "Grip and lower the lever to half-way.",
+      "Move the lever through a right angle downwards.",
+      "Complete a lever pull from random positions."
+    ]
+  },
+  {
+    "env": "pick-place-wall-v3",
+    "description": [
+      "Pick the puck, bypass the wall, and place it at the goal.",
+      "Lift the object over the barrier and drop it on target.",
+      "Carry the puck around the wall into the goal spot.",
+      "Navigate past the block and place the puck correctly.",
+      "Perform wall-bypass pick-and-place from random layouts."
+    ]
+  },
+  {
+    "env": "pick-out-of-hole-v3",
+    "description": [
+      "Pick the puck out of the hole.",
+      "Lift the disc vertically from its recess.",
+      "Extract the object from the cavity.",
+      "Retrieve the puck from inside the slot.",
+      "Complete a hole-extraction from varied starts."
+    ]
+  },
+  {
+    "env": "pick-place-v3",
+    "description": [
+      "Pick the puck and place it at the goal.",
+      "Lift the object and drop it on the target pad.",
+      "Carry the disc to the marked goal.",
+      "Relocate the puck from table to goal zone.",
+      "Finish a pick-and-place from random puck and goal positions."
+    ]
+  },
+  {
+    "env": "plate-slide-v3",
+    "description": [
+      "Slide the plate into the cabinet.",
+      "Push the dish forward until inside the shelf.",
+      "Move the plate along the rail into storage.",
+      "Insert the plate into the cabinet slot.",
+      "Complete sliding from varied plate poses."
+    ]
+  },
+  {
+    "env": "plate-slide-side-v3",
+    "description": [
+      "Slide the plate sideways into the cabinet.",
+      "Push the dish laterally into its slot.",
+      "Move the plate from the side into storage.",
+      "Insert the plate sideways under the rail.",
+      "Perform side-slide from random starting states."
+    ]
+  },
+  {
+    "env": "plate-slide-back-v3",
+    "description": [
+      "Pull the plate out of the cabinet.",
+      "Slide the dish backward towards you.",
+      "Retrieve the plate from the shelf.",
+      "Move the plate out along its rail.",
+      "Complete plate retrieval from random positions."
+    ]
+  },
+  {
+    "env": "plate-slide-back-side-v3",
+    "description": [
+      "Pull the plate out of the cabinet sideways.",
+      "Slide the dish laterally back to you.",
+      "Retrieve the plate sideways from storage.",
+      "Move the plate out along the side rail.",
+      "Perform side-back slide from varied layouts."
+    ]
+  },
+  {
+    "env": "peg-insert-side-v3",
+    "description": [
+      "Insert the peg sideways into the hole.",
+      "Push the rod horizontally into its slot.",
+      "Align and slide the peg into side receptacle.",
+      "Perform a lateral peg insertion fully.",
+      "Finish side-insert from random peg & goal poses."
+    ]
+  },
+  {
+    "env": "peg-unplug-side-v3",
+    "description": [
+      "Remove the peg sideways from the hole.",
+      "Pull the rod out horizontally.",
+      "Extract the peg from the side receptacle.",
+      "Slide the peg away from its slot.",
+      "Complete side-unplug from varied setups."
+    ]
+  },
+  {
+    "env": "soccer-v3",
+    "description": [
+      "Kick the soccer ball into the goal.",
+      "Push the ball forward until it scores.",
+      "Guide the soccer into the net.",
+      "Shoot the ball past the goal line.",
+      "Score a goal from random ball and net spots."
+    ]
+  },
+  {
+    "env": "stick-push-v3",
+    "description": [
+      "Use the stick to push the box forward.",
+      "Grip the rod and drive the cube ahead.",
+      "Press the stick against the block to move it.",
+      "Push the object with the stick to target.",
+      "Complete stick-push from random stick poses."
+    ]
+  },
+  {
+    "env": "stick-pull-v3",
+    "description": [
+      "Use the stick to pull the box toward you.",
+      "Hook the rod behind the cube and drag it.",
+      "Pull the object with the stick to target.",
+      "Grip the stick and draw the block closer.",
+      "Perform stick-pull from varied setups."
+    ]
+  },
+  {
+    "env": "push-v3",
+    "description": [
+      "Push the puck to the goal mark.",
+      "Slide the disc across the table into target.",
+      "Move the puck until it reaches the goal pad.",
+      "Guide the object along the plane to its spot.",
+      "Finish pushing from random puck and goal positions."
+    ]
+  },
+  {
+    "env": "push-wall-v3",
+    "description": [
+      "Push the puck around the wall to the goal.",
+      "Navigate the disc past the barrier into target.",
+      "Bypass the obstacle and slide the puck to goal.",
+      "Guide the puck around the wall successfully.",
+      "Complete wall-bypass push from random layouts."
+    ]
+  },
+  {
+    "env": "push-back-v3",
+    "description": [
+      "Push the puck backward to its goal.",
+      "Move the disc away from you into the target zone.",
+      "Slide the puck in reverse until goal reached.",
+      "Guide the object backward to the goal pad.",
+      "Perform back-push from varied positions."
+    ]
+  },
+  {
+    "env": "reach-v3",
+    "description": [
+      "Reach the goal point with the gripper.",
+      "Move the end-effector until within goal tolerance.",
+      "Navigate to the target XYZ location.",
+      "Bring the hand to the desired point.",
+      "Reach random goals accurately."
+    ]
+  },
+  {
+    "env": "reach-wall-v3",
+    "description": [
+      "Reach the goal point around the wall.",
+      "Bypass the obstacle and touch the target.",
+      "Move the gripper past the barrier to the goal.",
+      "Navigate around the wall to the XYZ point.",
+      "Perform wall-reach from random configurations."
+    ]
+  },
+  {
+    "env": "shelf-place-v3",
+    "description": [
+      "Pick the puck and place it on the shelf.",
+      "Lift the disc up to the shelf surface.",
+      "Deposit the object onto the high shelf.",
+      "Position the puck onto the shelf target.",
+      "Complete shelf-place from random puck poses."
+    ]
+  },
+  {
+    "env": "sweep-into-v3",
+    "description": [
+      "Sweep the puck into the hole.",
+      "Push the object across the table into the slot.",
+      "Brush the disc until it falls into the recess.",
+      "Guide the puck into the opening.",
+      "Sweep-into from varied puck positions."
+    ]
+  },
+  {
+    "env": "sweep-v3",
+    "description": [
+      "Sweep the puck off the table.",
+      "Push the object beyond the table edge.",
+      "Brush the disc until it leaves the surface.",
+      "Move the puck off-table completely.",
+      "Perform sweeping from random initial spots."
+    ]
+  },
+  {
+    "env": "window-open-v3",
+    "description": [
+      "Push the window panel open.",
+      "Slide the window upward until it clears.",
+      "Open the window by raising the sash.",
+      "Move the window to its fully open position.",
+      "Open from random window heights."
+    ]
+  },
+  {
+    "env": "window-close-v3",
+    "description": [
+      "Pull the window panel shut.",
+      "Slide the window downward until closed.",
+      "Close the window by lowering the sash.",
+      "Move the window to its fully closed position.",
+      "Close from varied window heights."
+    ]
+  }
+]
