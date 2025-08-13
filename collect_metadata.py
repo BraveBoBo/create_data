@@ -380,7 +380,7 @@ RENDER_MODE = "rgb_array"
 CAMERA_NAMES = ["corner", "topview", "behindGripper", "gripperPOV", "corner2", "corner3", "corner4"]
 CAMERA_FIP = False
 SEED = 42
-EPISODES_NUMBER = 1
+EPISODES_NUMBER = 100
 MAX_EPISODE_STEPS = 500
 
 SAVE_ROOT = "/data/robot_dataset/metaworld/mt50_v3_zarr"
