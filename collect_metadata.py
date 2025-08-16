@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """
 Meta-World 数据采集到 Zarr（多相机 + proprio 同步写入）
 - 图像：按 (3, H, W) uint8（CHW）写盘（不转 float、不/255）
@@ -238,7 +238,7 @@ def collect_data_to_zarr(task_env_dis: Dict[str, List[str]], save_root: str = SA
         qpos    (N, nq) float32
         robot0_arm_qpos (N, n_arm) float32
         proprio (N, n_arm) float32         # = robot0_arm_qpos
-        camera{i}_chw (N, 3, H, W) uint8   # 每个可用相机（CHW）
+        <camera_name> (N, 3, H, W) uint8   # 每个可用相机，以相机名直接命名
       meta/
         episode_ends (E,) int64            # 每个 episode 的 end（exclusive，下标累计）
       attrs:
@@ -297,12 +297,15 @@ def collect_data_to_zarr(task_env_dis: Dict[str, List[str]], save_root: str = SA
         root, data_grp, meta_grp = create_or_open_zarr(zarr_path)
         root.attrs["env_name"] = env_name
         root.attrs["description"] = task_description
-        root.attrs["dataset_version"] = "mw_mt50_v3_multi_cam_chw_uint8_v1"
+        root.attrs["dataset_version"] = "mw_mt50_v3_multi_cam_chw_uint8_v2" # version bump
 
         # === 相机映射与元数据 ===
-        camera_map = {}  # { "<camera_name>": {"dataset": "camera{i}_chw", "index": i, "mj_id": int|None, "flip_vertical": bool, "color": "rgb"} }
+        camera_map = {}  # { "<camera_name>": {"dataset": "<camera_name>", "index": i, ...} }
         for i, cam_name in enumerate(active_cams):
-            ds_name = f"camera{i}_chw"
+            # --------------------------------------------------------------------
+            # 修改点: 直接使用相机名作为数据集名称，并移除 "_chw" 后缀
+            # --------------------------------------------------------------------
+            ds_name = cam_name
             mj_id = mj_camera_name_to_id(model, cam_name)
             camera_map[cam_name] = {
                 "dataset": ds_name,
@@ -328,7 +331,7 @@ def collect_data_to_zarr(task_env_dis: Dict[str, List[str]], save_root: str = SA
         # === 相机数组（CHW uint8） ===
         cam_arrays: Dict[str, zarr.core.Array] = {}
         for cam_name, meta in camera_map.items():
-            ds_name = meta["dataset"]  # camera{i}_chw
+            ds_name = meta["dataset"]  # e.g., "corner"
             cam_arrays[cam_name] = zarr_create_timeseries(
                 data_grp, ds_name, (3, H, W), np.uint8, chunks_t=1
             )
