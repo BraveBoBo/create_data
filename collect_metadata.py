@@ -1,11 +1,7 @@
 # -*- coding: utf-8 -*-
-"""
-Meta-World 数据采集到 Zarr（多相机 + proprio 同步写入）
-- 图像：按 (3, H, W) uint8（CHW）写盘（不转 float、不/255）
-- 写入 camera 映射：root.attrs["cameras"] = {camera_name: {...}}
-- 同步写入 proprio == robot0_arm_qpos（若能解析出手臂关节）
-"""
-
+import warnings
+warnings.filterwarnings("ignore", message=".*Overriding environment.*already in registry.*")
+warnings.filterwarnings("ignore", message=".*Constant\(s\) may be too high.*")
 import os
 import json
 from typing import Dict, List, Optional, Tuple
@@ -27,7 +23,8 @@ np.random.seed(42)
 DEBUG = False                      # 不写视频
 RANDOM_DIS = True                  # 任务描述随机
 RENDER_MODE = "rgb_array"
-CAMERA_NAMES = ["corner", "topview", "behindGripper", "gripperPOV", "corner2", "corner3", "corner4"]
+CAMERA_NAMES = ["topview", "gripperPOV",]
+# CAMERA_NAMES = ["corner", "topview", "behindGripper", "gripperPOV", "corner2", "corner3", "corner4"]
 CAMERA_FIP = False                 # 是否垂直翻转（flip vertical）
 SEED = 42
 EPISODES_NUMBER = 2
@@ -325,7 +322,7 @@ def collect_data_to_zarr(task_env_dis: Dict[str, List[str]], save_root: str = SA
         arr_arm = None
         arr_proprio = None
         if arm_dim > 0:
-            arr_arm     = zarr_create_timeseries(data_grp, "robot0_arm_qpos", (arm_dim,), np.float32, chunks_t=1024)
+            # arr_arm     = zarr_create_timeseries(data_grp, "robot0_arm_qpos", (arm_dim,), np.float32, chunks_t=1024)
             arr_proprio = zarr_create_timeseries(data_grp, "proprio",         (arm_dim,), np.float32, chunks_t=1024)
 
         # === 相机数组（CHW uint8） ===
