@@ -1,44 +1,57 @@
 # -*- coding: utf-8 -*-
-import warnings
-warnings.filterwarnings("ignore", message=".*Overriding environment.*already in registry.*")
-warnings.filterwarnings("ignore", message=".*Constant\(s\) may be too high.*")
-import os
 import json
+import os
+import shutil
 from typing import Dict, List, Optional, Tuple
 
 import gymnasium as gym
 import mujoco as mj
 import numpy as np
 import zarr
-
 from Metaworld.metaworld.env_dict import MT50_V3
 from Metaworld.metaworld.policies import ENV_POLICY_MAP
+import warnings
+warnings.filterwarnings(
+    "ignore", message=".*Overriding environment.*already in registry.*"
+)
+warnings.filterwarnings("ignore", message=".*Constant\\(s\\) may be too high.*")
 
-# ---------------------
-# 全局配置
-# ---------------------
-os.environ["MUJOCO_GL"] = "egl"   # 无头渲染
+
+# ==============================================================================
+# Global Configuration
+# ==============================================================================
+os.environ["MUJOCO_GL"] = "egl"  # For headless rendering
 np.random.seed(42)
 
-DEBUG = False                      # 不写视频
-RANDOM_DIS = True                  # 任务描述随机
+DEBUG = False  # If True, suppresses video writing
+RANDOM_DIS = True  # If True, uses random task descriptions
 RENDER_MODE = "rgb_array"
-CAMERA_NAMES = ["topview", "gripperPOV",]
-# CAMERA_NAMES = ["corner", "topview", "behindGripper", "gripperPOV", "corner2", "corner3", "corner4"]
-CAMERA_FIP = False                 # 是否垂直翻转（flip vertical）
+CAMERA_NAMES = ["corner4", "gripperPOV"]
+# CAMERA_NAMES = ["corner", "corner2", "corner3", "corner4", "gripperPOV", "topview", "behindGripper"]
+CAMERA_FIP = True  # If True, flips images vertically
 SEED = 42
-EPISODES_NUMBER = 2
+EPISODES_NUMBER = 100
 MAX_EPISODE_STEPS = 500
 
-SAVE_ROOT = "/data/robot_dataset/metaworld/mt50_v3_zarr"                # 可改成你的数据根目录
+SAVE_ROOT = "/data/robot_dataset/metaworld/mt50_v3_zarr"
+# SAVE_ROOT = "/data/robot_dataset/metaworld/debug/metaworld/mt50_v3_zarr"
 os.makedirs(SAVE_ROOT, exist_ok=True)
 
+# New camera mapping using explicit IDs per environment
+CAMERA_ID_MAP_PER_ENV: Dict[str, Dict[str, int]] = {
+    # Per-task override example (fill with your real ids if they differ)
+    # "pick-place-v3": {"topview": 2, "gripperPOV": 5},
+    # "door-close-v3": {"topview": 0, "gripperPOV": 3},
+    # Fallback default mapping (used if no per-env override is present)
+    "__default__": {"topview": 0, "gripperPOV": 6, "corner": 1, "corner2": 2, "corner3": 3, "corner4": 4, "behindGripper": 5}
+}
 
-# ---------------------
-# 工具函数
-# ---------------------
-def get_task_discriptions():
-    """读取任务描述文件。"""
+
+# ==============================================================================
+# Utility Functions
+# ==============================================================================
+def get_task_discriptions() -> dict:
+    """Reads the task description file."""
     with open(
         "/home/libo/project/cm/trunck-consistency-policy/create_data/metaworld_tasks_50_v2.json",
         "r",
@@ -47,8 +60,8 @@ def get_task_discriptions():
     return task_descriptions
 
 
-def get_task_name_and_desc(task_list) -> dict:
-    """将 env_name 映射到描述列表。"""
+def get_task_name_and_desc(task_list: list) -> dict:
+    """Maps environment names to a list of descriptions."""
     result = {}
     for item in task_list:
         env_name = item["env"]
@@ -57,16 +70,13 @@ def get_task_name_and_desc(task_list) -> dict:
     return result
 
 
-def sanitize_obs(obs, space):
-    """将 obs 转成 space.dtype、去 NaN/Inf，并在 Box 有界时裁剪到 [low, high]。"""
+def sanitize_obs(obs: np.ndarray, space: gym.Space) -> np.ndarray:
+    """Sanitizes an observation array."""
     x = np.asarray(obs)
-    # dtype 对齐
     if hasattr(space, "dtype") and x.dtype != space.dtype:
         x = x.astype(space.dtype, copy=False)
-    # 去 NaN/Inf
     if np.isnan(x).any() or np.isinf(x).any():
         x = np.nan_to_num(x, copy=False)
-    # Box 裁剪
     if hasattr(space, "low") and hasattr(space, "high"):
         low, high = space.low, space.high
         if np.all(np.isfinite(low)) and np.all(np.isfinite(high)):
@@ -74,58 +84,63 @@ def sanitize_obs(obs, space):
     return x
 
 
-def get_multiview_images(env, camera_names) -> Dict[str, np.ndarray]:
-    """按相机名优先渲染，失败时回退按 camera_id。返回 {name: (H,W,3) uint8}"""
+# ==================== NEW RENDERING FUNCTION ====================
+def get_images_by_id(
+    env: gym.Env,
+    env_name: str,
+    camera_names: List[str],
+    camera_id_map: Dict[str, Dict[str, int]],
+) -> Dict[str, np.ndarray]:
+    """Renders images from multiple camera views using explicit camera IDs.
+
+    Args:
+        env: The Gymnasium environment.
+        env_name: The name of the current Meta-World task.
+        camera_names: A list of camera names to render.
+        camera_id_map: A dictionary mapping env names and camera names to IDs.
+
+    Returns:
+        A dictionary mapping camera names to (H, W, 3) uint8 image arrays.
+    """
     multiview_images = {}
     base = getattr(env, "unwrapped", env)
     renderer = getattr(base, "mujoco_renderer", None)
 
-    # 1) 优先按名字渲染
-    if renderer is not None and hasattr(renderer, "render"):
-        for name in camera_names:
-            try:
-                img = renderer.render(camera_name=name)  # (H,W,3) uint8
-                if CAMERA_FIP:
-                    img = img[::-1]                      # 先在 NHWC 下翻转
-                multiview_images[name] = img
-            except Exception:
-                pass
+    if renderer is None or not hasattr(renderer, "camera_id"):
+        print("Warning: mujoco_renderer with camera_id not available.")
+        return multiview_images
 
-    # 2) 对缺失相机，按 camera_id 顺序回退
-    missing = [n for n in camera_names if n not in multiview_images]
-    if missing:
-        if renderer is not None and hasattr(renderer, "camera_id"):
-            original_id = renderer.camera_id
-            for i, name in enumerate(camera_names):
-                if name in multiview_images:
-                    continue
-                try:
-                    renderer.camera_id = i
-                    img = env.render()
-                    if CAMERA_FIP:
-                        img = img[::-1]
-                    multiview_images[name] = img
-                except Exception:
-                    pass
+    # Get the specific camera ID mapping for this env, or use the default
+    specific_map = camera_id_map.get(env_name, camera_id_map["__default__"])
+    
+    original_id = renderer.camera_id
+    try:
+        for name in camera_names:
+            camera_id = specific_map.get(name)
+            if camera_id is None:
+                print(f"Warning: Camera '{name}' not found in ID map for env '{env_name}'.")
+                continue
+            
             try:
-                renderer.camera_id = original_id
-            except Exception:
-                pass
-        else:
-            # 无 renderer.camera_id，则尝试默认 env.render()
-            try:
+                renderer.camera_id = camera_id
                 img = env.render()
                 if CAMERA_FIP:
                     img = img[::-1]
-                if missing:
-                    multiview_images[missing[0]] = img
-            except Exception:
-                pass
+                multiview_images[name] = img
+                # import cv2
+                # cv2.imwrite(f"{camera_id}_{name}.png", img)  # Save image for debugging
+            except Exception as e:
+                print(f"Error rendering camera '{name}' (ID: {camera_id}): {e}")
+    finally:
+        # Always restore the original camera ID
+        renderer.camera_id = original_id
+        
     return multiview_images
+# ===============================================================
 
 
-def resolve_model_data(env) -> Tuple[mj.MjModel, mj.MjData]:
-    """解析出 MuJoCo 的 model/data 句柄（优先 mujoco_renderer）。"""
+def resolve_model_data(env: gym.Env) -> Tuple[mj.MjModel, mj.MjData]:
+    """Resolves MuJoCo model and data handles from the environment."""
     base = getattr(env, "unwrapped", env)
     rend = getattr(base, "mujoco_renderer", None)
     if rend is not None:
@@ -143,11 +158,11 @@ def resolve_model_data(env) -> Tuple[mj.MjModel, mj.MjData]:
     data = getattr(base, "data", None)
     if model is not None and data is not None:
         return model, data
-    raise AttributeError("Cannot locate MuJoCo model/data (renderer/model/data not found).")
+    raise AttributeError("Cannot locate MuJoCo model/data from environment.")
 
 
 def mj_camera_name_to_id(model: mj.MjModel, name: str) -> Optional[int]:
-    """返回 MuJoCo 的相机 id，失败返回 None。"""
+    """Returns the MuJoCo camera ID for a given camera name."""
     try:
         return int(mj.mj_name2id(model, mj.mjtObj.mjOBJ_CAMERA, name))
     except Exception:
@@ -155,11 +170,14 @@ def mj_camera_name_to_id(model: mj.MjModel, name: str) -> Optional[int]:
 
 
 def split_arm_qpos(model: mj.MjModel, qpos: np.ndarray) -> np.ndarray:
-    """从 qpos 中按名称启发式抽取手臂 HINGE 关节（Sawyer 常见 7 个）。"""
+    """Heuristically extracts arm hinge joint positions from a qpos vector."""
     nj = model.njnt
     adr = model.jnt_qposadr
     jtype = model.jnt_type
-    sizes = [int((adr[j + 1] - adr[j]) if j < nj - 1 else (model.nq - adr[j])) for j in range(nj)]
+    sizes = [
+        int((adr[j + 1] - adr[j]) if j < nj - 1 else (model.nq - adr[j]))
+        for j in range(nj)
+    ]
 
     def jname(j):
         try:
@@ -173,13 +191,15 @@ def split_arm_qpos(model: mj.MjModel, qpos: np.ndarray) -> np.ndarray:
         jt = int(jtype[j])
         name = jname(j).lower()
         if jt == mj.mjtJoint.mjJNT_HINGE:
-            if name.startswith(("right_j", "sawyer", "arm")) and ("finger" not in name) and ("grip" not in name):
+            if name.startswith(("right_j", "sawyer", "arm")) and (
+                "finger" not in name
+            ) and ("grip" not in name):
                 arm.append(float(qpos[sl][0]))
     return np.asarray(arm, dtype=np.float32)
 
 
-def create_or_open_zarr(path: str):
-    """创建 zarr 根组并返回 (root, data_group, meta_group)。"""
+def create_or_open_zarr(path: str) -> Tuple[zarr.Group, zarr.Group, zarr.Group]:
+    """Creates a Zarr root group and returns the root, data, and meta groups."""
     store = zarr.DirectoryStore(path)
     root = zarr.group(store=store, overwrite=True)
     data = root.create_group("data")
@@ -187,8 +207,10 @@ def create_or_open_zarr(path: str):
     return root, data, meta
 
 
-def zarr_create_1d(meta_grp: zarr.Group, name: str, dtype, compressor=None):
-    """在 meta 组里创建一维可扩展数组（初始 0 长度）。"""
+def zarr_create_1d(
+    meta_grp: zarr.Group, name: str, dtype, compressor=None
+) -> zarr.core.Array:
+    """Creates a 1D resizable Zarr array in the meta group."""
     return meta_grp.create(
         name,
         shape=(0,),
@@ -199,9 +221,15 @@ def zarr_create_1d(meta_grp: zarr.Group, name: str, dtype, compressor=None):
     )
 
 
-def zarr_create_timeseries(data_grp: zarr.Group, name: str, per_step_shape: Tuple[int, ...], dtype, chunks_t: int,
-                           compressor=None):
-    """创建按时间拼接的一维时间序列数组（初始 0），第 0 维为时间。"""
+def zarr_create_timeseries(
+    data_grp: zarr.Group,
+    name: str,
+    per_step_shape: Tuple[int, ...],
+    dtype,
+    chunks_t: int,
+    compressor=None,
+) -> zarr.core.Array:
+    """Creates a time-series Zarr array with time as the first dimension."""
     shape = (0,) + tuple(per_step_shape)
     chunks = (chunks_t,) + tuple(per_step_shape)
     return data_grp.create(
@@ -215,93 +243,73 @@ def zarr_create_timeseries(data_grp: zarr.Group, name: str, per_step_shape: Tupl
 
 
 def zarr_append(arr: zarr.core.Array, data_np: np.ndarray):
-    """把 data_np 追加到 zarr 数组末尾。"""
+    """Appends a NumPy array to the end of a Zarr array."""
     assert arr.ndim == data_np.ndim, f"ndim mismatch: {arr.ndim} vs {data_np.ndim}"
-    old = arr.shape[0]
-    new = old + data_np.shape[0]
-    arr.resize((new,) + arr.shape[1:])
-    arr[old:new] = data_np
+    old_len = arr.shape[0]
+    new_len = old_len + data_np.shape[0]
+    arr.resize((new_len,) + arr.shape[1:])
+    arr[old_len:new_len] = data_np
 
 
-# ---------------------
-# 主流程：写 Zarr（兼容 Diffusion Policy ReplayBuffer）
-# ---------------------
-def collect_data_to_zarr(task_env_dis: Dict[str, List[str]], save_root: str = SAVE_ROOT):
-    """为每个 env 采集数据，并写入 Zarr：
-    /<env_name>.zarr/
-      data/
-        action  (N, Da) float32
-        state   (N, Ds) float32
-        qpos    (N, nq) float32
-        robot0_arm_qpos (N, n_arm) float32
-        proprio (N, n_arm) float32         # = robot0_arm_qpos
-        <camera_name> (N, 3, H, W) uint8   # 每个可用相机，以相机名直接命名
-      meta/
-        episode_ends (E,) int64            # 每个 episode 的 end（exclusive，下标累计）
-      attrs:
-        cameras: {name: {"dataset": str, "index": int, "mj_id": int|None, "flip_vertical": bool, "color":"rgb"}}
-        image_layout: "NCHW_uint8"
-    """
+# ==============================================================================
+# Main Data Collection Pipeline
+# ==============================================================================
+def collect_data_to_zarr(
+    task_env_dis: Dict[str, List[str]], save_root: str = SAVE_ROOT
+):
+    """Collects data for each environment and writes it to a Zarr file."""
     os.makedirs(save_root, exist_ok=True)
 
     for env_name, desc_list in task_env_dis.items():
-        task_description = desc_list[np.random.randint(len(desc_list))] if RANDOM_DIS else desc_list[0]
+        task_description = (
+            desc_list[np.random.randint(len(desc_list))] if RANDOM_DIS else desc_list[0]
+        )
         print(f"\n--- Processing {env_name} ---")
 
-        # 1) 创建环境
+        # 1. Create the environment.
         env = gym.make(
             "Meta-World/MT1",
             env_name=env_name,
             render_mode=RENDER_MODE,
             camera_name=CAMERA_NAMES[0],
-            width=256, height=256,
+            width=256,
+            height=256,
         )
         policy = ENV_POLICY_MAP[env_name]()
 
-        # 2) reset 后探测观测维与相机尺寸
+        # 2. Detect observation dimensions and camera size after reset.
         obs, _ = env.reset(seed=SEED)
         obs = sanitize_obs(obs, env.observation_space)
-        multiview = get_multiview_images(env, CAMERA_NAMES)
+        multiview = get_images_by_id(env, env_name, CAMERA_NAMES, CAMERA_ID_MAP_PER_ENV)
 
-        # 只保留能成功渲染的相机，并固定顺序
         active_cams = [name for name in CAMERA_NAMES if name in multiview]
-        if len(active_cams) == 0:
-            # 至少保证一个视角（用 env.render 的默认）
-            img = env.render()
-            if CAMERA_FIP:
-                img = img[::-1]
-            multiview = {CAMERA_NAMES[0]: img}
-            active_cams = [CAMERA_NAMES[0]]
+        if not active_cams:
+            raise RuntimeError(f"Could not render any active cameras for env {env_name}")
 
         H, W, C = list(multiview.values())[0].shape
-        assert C == 3, "期望 RGB 图像"
+        assert C == 3, "Expecting RGB images."
         state_dim = int(np.asarray(obs).shape[0])
         action_dim = int(env.action_space.shape[0])
 
-        # MuJoCo 句柄（用于 qpos）
         model, data = resolve_model_data(env)
         qpos_dim = int(data.qpos.shape[0])
         arm_probe = split_arm_qpos(model, data.qpos)
-        arm_dim = int(arm_probe.shape[0])  # 可能为 0
+        arm_dim = int(arm_probe.shape[0])
 
-        # 3) 为该 env 创建 zarr 目录与数组
+        # 3. Create Zarr directory and arrays for this environment.
         zarr_path = os.path.join(save_root, f"{env_name}.zarr")
         if os.path.exists(zarr_path):
-            print(f"  -> Remove existing: {zarr_path}")
-            import shutil
+            print(f"  -> Removing existing directory: {zarr_path}")
             shutil.rmtree(zarr_path)
 
         root, data_grp, meta_grp = create_or_open_zarr(zarr_path)
         root.attrs["env_name"] = env_name
         root.attrs["description"] = task_description
-        root.attrs["dataset_version"] = "mw_mt50_v3_multi_cam_chw_uint8_v2" # version bump
+        root.attrs["dataset_version"] = "mw_mt50_v3_multi_cam_chw_uint8_v2"
 
-        # === 相机映射与元数据 ===
-        camera_map = {}  # { "<camera_name>": {"dataset": "<camera_name>", "index": i, ...} }
+        # Setup camera metadata.
+        camera_map = {}
         for i, cam_name in enumerate(active_cams):
-            # --------------------------------------------------------------------
-            # 修改点: 直接使用相机名作为数据集名称，并移除 "_chw" 后缀
-            # --------------------------------------------------------------------
             ds_name = cam_name
             mj_id = mj_camera_name_to_id(model, cam_name)
             camera_map[cam_name] = {
@@ -309,26 +317,32 @@ def collect_data_to_zarr(task_env_dis: Dict[str, List[str]], save_root: str = SA
                 "index": i,
                 "mj_id": mj_id,
                 "flip_vertical": bool(CAMERA_FIP),
-                "color": "rgb"
+                "color": "rgb",
             }
         root.attrs["cameras"] = camera_map
         root.attrs["image_layout"] = "NCHW_uint8"
 
-        # === 标量与低维 ===
-        arr_action = zarr_create_timeseries(data_grp, "action", (action_dim,), np.float32, chunks_t=1024)
-        arr_state  = zarr_create_timeseries(data_grp, "state",  (state_dim,),  np.float32, chunks_t=1024)
-        arr_qpos   = zarr_create_timeseries(data_grp, "qpos",   (qpos_dim,),   np.float32, chunks_t=1024)
+        # Setup low-dimensional arrays.
+        arr_action = zarr_create_timeseries(
+            data_grp, "action", (action_dim,), np.float32, chunks_t=1024
+        )
+        arr_state = zarr_create_timeseries(
+            data_grp, "state", (state_dim,), np.float32, chunks_t=1024
+        )
+        arr_qpos = zarr_create_timeseries(
+            data_grp, "qpos", (qpos_dim,), np.float32, chunks_t=1024
+        )
 
-        arr_arm = None
         arr_proprio = None
         if arm_dim > 0:
-            # arr_arm     = zarr_create_timeseries(data_grp, "robot0_arm_qpos", (arm_dim,), np.float32, chunks_t=1024)
-            arr_proprio = zarr_create_timeseries(data_grp, "proprio",         (arm_dim,), np.float32, chunks_t=1024)
+            arr_proprio = zarr_create_timeseries(
+                data_grp, "proprio", (arm_dim,), np.float32, chunks_t=1024
+            )
 
-        # === 相机数组（CHW uint8） ===
+        # Setup image arrays (CHW uint8).
         cam_arrays: Dict[str, zarr.core.Array] = {}
         for cam_name, meta in camera_map.items():
-            ds_name = meta["dataset"]  # e.g., "corner"
+            ds_name = meta["dataset"]
             cam_arrays[cam_name] = zarr_create_timeseries(
                 data_grp, ds_name, (3, H, W), np.uint8, chunks_t=1
             )
@@ -337,65 +351,69 @@ def collect_data_to_zarr(task_env_dis: Dict[str, List[str]], save_root: str = SA
             cam_arrays[cam_name].attrs["color"] = "rgb"
             cam_arrays[cam_name].attrs["layout"] = "CHW"
 
-        # episode 结束索引
         arr_ep_ends = zarr_create_1d(meta_grp, "episode_ends", np.int64)
 
-        # 4) 采集循环：把每步 append 到各数组，并在 episode 末尾追加 end 索引
+        # 4. Collection loop.
         total_steps = 0
         successes = 0
-
         while successes < EPISODES_NUMBER:
             obs, _ = env.reset(seed=SEED)
             obs = sanitize_obs(obs, env.observation_space)
             step_count = 0
 
             while step_count < MAX_EPISODE_STEPS:
-                # 渲染所有相机 (NHWC uint8)，此时已按 CAMERA_FIP 处理
-                multiview = get_multiview_images(env, active_cams)
+                multiview = get_images_by_id(env, env_name, active_cams, CAMERA_ID_MAP_PER_ENV)
 
-                # 关节
                 model, data = resolve_model_data(env)
                 qpos_now = data.qpos.copy().astype(np.float32)
-                arm_now = split_arm_qpos(model, qpos_now) if arm_dim > 0 else None
+                arm_now = (
+                    split_arm_qpos(model, qpos_now) if arm_dim > 0 else None
+                )
 
-                # 动作（expert policy）
                 act = policy.get_action(obs).astype(np.float32)
 
-                # ---- 写状态/关节/动作 ----
-                zarr_append(arr_state,  obs.reshape(1, -1).astype(np.float32))
-                zarr_append(arr_qpos,   qpos_now.reshape(1, -1))
-                if arr_arm is not None:
-                    zarr_append(arr_arm,     arm_now.reshape(1, -1))
+                # Write low-dimensional data.
+                zarr_append(arr_state, obs.reshape(1, -1).astype(np.float32))
+                zarr_append(arr_qpos, qpos_now.reshape(1, -1))
                 if arr_proprio is not None:
                     zarr_append(arr_proprio, arm_now.reshape(1, -1))
 
-                # ---- 写相机帧（转 CHW uint8）----
+                # Write image frames (convert to CHW uint8).
                 for cam_name in active_cams:
-                    img_nhwc = multiview[cam_name]               # (H,W,3) uint8
+                    img_nhwc = multiview[cam_name]  # (H,W,3) uint8
                     assert img_nhwc.dtype == np.uint8 and img_nhwc.ndim == 3
-                    img_chw = np.ascontiguousarray(img_nhwc.transpose(2, 0, 1))  # -> (3,H,W) uint8
+                    img_chw = np.ascontiguousarray(
+                        img_nhwc.transpose(2, 0, 1)
+                    )
                     zarr_append(cam_arrays[cam_name], img_chw[None, ...])
 
-                # ---- 动作 ----
+                # Write action.
                 zarr_append(arr_action, act.reshape(1, -1))
 
-                # 环境前进一步
+                # Step the environment.
                 obs, rew, terminated, truncated, info = env.step(act)
                 obs = sanitize_obs(obs, env.observation_space)
                 step_count += 1
                 total_steps += 1
 
-                done = bool(info.get("success", 0)) or bool(terminated) or bool(truncated)
+                done = (
+                    bool(info.get("success", 0))
+                    or bool(terminated)
+                    or bool(truncated)
+                )
                 if done:
-                    # 把 episode 的结束位置（exclusive 累积长度）写到 meta/episode_ends
-                    zarr_append(arr_ep_ends, np.asarray([total_steps], dtype=np.int64))
+                    zarr_append(
+                        arr_ep_ends, np.asarray([total_steps], dtype=np.int64)
+                    )
                     if info.get("success", 0):
                         successes += 1
                     break
 
-        # 清理渲染器（更干净地释放 EGL/OSMesa）
+        # Clean up the renderer to release GPU resources.
         try:
-            if hasattr(env, "unwrapped") and hasattr(env.unwrapped, "mujoco_renderer"):
+            if hasattr(env, "unwrapped") and hasattr(
+                env.unwrapped, "mujoco_renderer"
+            ):
                 renderer = env.unwrapped.mujoco_renderer
                 if hasattr(renderer, "close"):
                     renderer.close()
@@ -403,13 +421,13 @@ def collect_data_to_zarr(task_env_dis: Dict[str, List[str]], save_root: str = SA
             pass
         env.close()
 
-        print(f"Saved {successes} episodes, {total_steps} steps -> {zarr_path}")
+        print(f"Saved {successes} episodes ({total_steps} steps) to: {zarr_path}")
         print("Keys under /data:", list(data_grp.array_keys()))
         print("Episode ends:", arr_ep_ends[:])
     print("\nAll tasks done.")
 
 
 if __name__ == "__main__":
-    task_ = get_task_discriptions()
-    task_env_dis = get_task_name_and_desc(task_)
-    collect_data_to_zarr(task_env_dis, save_root=SAVE_ROOT)
+    task_descriptions = get_task_discriptions()
+    task_env_map = get_task_name_and_desc(task_descriptions)
+    collect_data_to_zarr(task_env_map, save_root=SAVE_ROOT)

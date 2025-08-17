@@ -1,0 +1,1052 @@
+{
+  "assembly-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "basketball-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "bin-picking-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "box-close-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "button-press-topdown-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "button-press-topdown-wall-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "button-press-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "button-press-wall-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "coffee-button-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "coffee-pull-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "coffee-push-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "dial-turn-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "disassemble-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "door-close-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "door-lock-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "door-open-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "door-unlock-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "hand-insert-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "drawer-close-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "drawer-open-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "faucet-open-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "faucet-close-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "hammer-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "handle-press-side-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "handle-press-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "handle-pull-side-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "handle-pull-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "lever-pull-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "pick-place-wall-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "pick-out-of-hole-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "pick-place-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "plate-slide-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "plate-slide-side-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "plate-slide-back-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "plate-slide-back-side-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "peg-insert-side-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "peg-unplug-side-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "soccer-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "stick-push-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "stick-pull-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "push-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "push-wall-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "push-back-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "reach-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "reach-wall-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "shelf-place-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "sweep-into-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "sweep-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "window-open-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  },
+  "window-close-v3": {
+    "ncam": 7,
+    "id_to_name": {
+      "0": "topview",
+      "1": "corner",
+      "2": "corner2",
+      "3": "corner3",
+      "4": "corner4",
+      "5": "behindGripper",
+      "6": "gripperPOV"
+    },
+    "name_to_id": {
+      "topview": 0,
+      "corner": 1,
+      "corner2": 2,
+      "corner3": 3,
+      "corner4": 4,
+      "behindGripper": 5,
+      "gripperPOV": 6
+    }
+  }
+}
