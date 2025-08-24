@@ -35,10 +35,11 @@ CAMERA_NAMES = ["corner4", "gripperPOV"]
 
 CAMERA_FIP = True              # 是否垂直翻转
 SEED = 42
-EPISODES_NUMBER = 100          # 目标成功 episode 数
+EPISODES_NUMBER = 1          # 目标成功 episode 数
 MAX_EPISODE_STEPS = 500
 
-SAVE_ROOT = "/data/robot_dataset/metaworld/mt50_v3_zarr"
+# SAVE_ROOT = "/data/robot_dataset/metaworld/mt50_v3_zarr"
+SAVE_ROOT = "/data/robot_dataset/metaworld/debug"
 os.makedirs(SAVE_ROOT, exist_ok=True)
 
 # 压缩器：lz4（更快）或 zstd（clevel=1~3 也很快）
@@ -367,6 +368,7 @@ def collect_data_to_zarr(task_env_dis: Dict[str, List[str]], save_root: str = SA
                 if arr_proprio is not None:
                     app.append("proprio", arm_now.reshape(-1))
                 app.append("action", act.reshape(-1))
+                print("Buffered data for step:", step_count)
 
                 for cam_name in active_cams:
                     img_nhwc = multiview[cam_name]            # (H,W,3) uint8（已翻转）
