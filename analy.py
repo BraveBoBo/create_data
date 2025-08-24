@@ -134,7 +134,7 @@ def main():
     ap = argparse.ArgumentParser(description="Analyze Zarr: plot actions & visualize RGB.")
     # Make positional zarr_path optional with a default
     ap.add_argument("zarr_path", type=str, nargs="?",
-                    default="/data/robot_dataset/metaworld/debug_rb/basketball-v3.zarr",
+                    default="/data/robot_dataset/metaworld/mt50_v3_zarr/basketball-v3.zarr",
                     help="Path to <env>.zarr (optional, default set)")
     ap.add_argument("--ep", type=int, default=0, help="Episode index (default 0)")
     ap.add_argument("--cams", type=str, default="", help="Camera names, comma-separated; auto if empty")
